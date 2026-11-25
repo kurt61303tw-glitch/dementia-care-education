@@ -6,21 +6,21 @@
   <title>每日失智衛教一句話｜50則高實證護腦知識橫幅</title>
   <style>
     :root {
-      --bg-page: #FFF0F5;
-      --banner-bg: #FFF9FB;
-      --strip-bg: #FFE4EE;
-      --border: #F5C2D7;
-      --primary: #C2185B;
-      --primary-light: #FCE4EC;
-      --accent: #D81B60;
-      --accent-light: #FFD9E8;
-      --text-main: #4A1C2F;
-      --text-muted: #8C4A67;
-      --mask-bg: #F8D0E0;
-      --mask-hover: #F3BBD1;
-      --reveal-bg: #FFF0F6;
-      --reveal-border: #F06292;
-      --reveal-text: #880E4F;
+      --bg-page: #FDF8F9;
+      --banner-bg: #FFFFFF;
+      --strip-bg: #FAF0F3;
+      --border: #EEDCE1;
+      --primary: #A65E72;
+      --primary-light: #F7ECEF;
+      --accent: #B86B82;
+      --accent-light: #FBF2F5;
+      --text-main: #3A2E32;
+      --text-muted: #7D6B71;
+      --mask-bg: #F3E5E9;
+      --mask-hover: #EBD8DE;
+      --reveal-bg: #FDF9FA;
+      --reveal-border: #D9A7B6;
+      --reveal-text: #5C3240;
     }
 
     * {
@@ -32,27 +32,26 @@
 
     body {
       background-color: var(--bg-page);
-      background-image: radial-gradient(circle at top left, #FFE8F0 0%, #FFF0F5 55%, #FCE4EC 100%);
       color: var(--text-main);
       padding: 14px 16px;
       line-height: 1.5;
     }
 
-    /* 橫式 Notion 嵌入式主容器（寬扁型、粉紅柔和質感） */
+    /* 橫式 Notion 嵌入式主容器（寬扁型、輕度裸粉質感） */
     .horizontal-banner {
       max-width: 980px;
       margin: 0 auto;
       background: var(--banner-bg);
-      border: 2px solid var(--border);
-      border-radius: 16px;
-      box-shadow: 0 6px 20px rgba(194, 24, 91, 0.1);
+      border: 1.5px solid var(--border);
+      border-radius: 15px;
+      box-shadow: 0 4px 16px rgba(166, 94, 114, 0.06);
       overflow: hidden;
     }
 
     /* 頂部薄控制條：編號、分類、50題快速選單、證據來源標籤 */
     .top-strip {
-      background: linear-gradient(90deg, #FFE0EB 0%, #FFD6E5 100%);
-      border-bottom: 1.5px solid var(--border);
+      background: var(--strip-bg);
+      border-bottom: 1px solid var(--border);
       padding: 9px 18px;
       display: flex;
       justify-content: space-between;
@@ -69,39 +68,39 @@
     }
 
     .pulse-dot {
-      width: 9px;
-      height: 9px;
-      background: #E91E63;
+      width: 8px;
+      height: 8px;
+      background: #C4748B;
       border-radius: 50%;
-      box-shadow: 0 0 0 3px rgba(233, 30, 99, 0.22);
+      box-shadow: 0 0 0 3px rgba(196, 116, 139, 0.18);
     }
 
     .badge-day {
       font-size: 0.86rem;
       font-weight: 800;
-      color: #FFFFFF;
-      background: linear-gradient(135deg, #EC407A, #C2185B);
-      padding: 3px 11px;
-      border-radius: 999px;
+      color: #824356;
+      background: #F3E0E6;
+      padding: 2px 11px;
+      border-radius: 6px;
     }
 
     .badge-cat {
       font-size: 0.85rem;
       font-weight: 700;
-      color: #9C1449;
+      color: #7D4A59;
       background: #FFFFFF;
-      border: 1px solid #F48FB1;
+      border: 1px solid #E8CFD6;
       padding: 2px 10px;
-      border-radius: 999px;
+      border-radius: 6px;
     }
 
     .badge-source {
       font-size: 0.8rem;
       font-weight: 600;
-      color: #7B3352;
-      background: rgba(255, 255, 255, 0.65);
+      color: var(--text-muted);
+      background: rgba(255, 255, 255, 0.7);
       padding: 2px 10px;
-      border-radius: 999px;
+      border-radius: 6px;
     }
 
     .strip-right {
@@ -112,23 +111,23 @@
     }
 
     .topic-select {
-      border: 1.5px solid #F48FB1;
+      border: 1px solid #E2C6CE;
       background: #FFFFFF;
       color: var(--text-main);
       padding: 4px 8px;
-      border-radius: 8px;
+      border-radius: 7px;
       font-size: 0.84rem;
-      font-weight: 700;
+      font-weight: 600;
       max-width: 240px;
       cursor: pointer;
     }
 
     .mini-btn {
       background: #FFFFFF;
-      border: 1.5px solid #F48FB1;
-      color: var(--primary);
+      border: 1px solid #E2C6CE;
+      color: var(--text-main);
       padding: 4px 10px;
-      border-radius: 8px;
+      border-radius: 7px;
       font-size: 0.84rem;
       font-weight: 700;
       cursor: pointer;
@@ -155,7 +154,7 @@
       flex-direction: column;
       gap: 10px;
       padding-right: 12px;
-      border-right: 1.5px dashed #F48FB1;
+      border-right: 1.5px dashed #EAD6DC;
     }
 
     .question-text {
@@ -167,11 +166,11 @@
 
     .hint-line {
       font-size: 0.92rem;
-      color: #880E4F;
-      background: #FFF0F5;
-      border-left: 4px solid #EC407A;
-      padding: 8px 12px;
-      border-radius: 8px;
+      color: #784858;
+      background: #FCF6F8;
+      border-left: 3.5px solid #D49BAE;
+      padding: 7px 12px;
+      border-radius: 7px;
       font-weight: 600;
     }
 
@@ -184,34 +183,33 @@
 
     .spoiler-one-liner {
       position: relative;
-      border-radius: 14px;
+      border-radius: 12px;
       padding: 16px 18px;
       cursor: pointer;
       transition: all 0.22s ease;
       user-select: none;
-      min-height: 88px;
+      min-height: 86px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border: 2px solid #F48FB1;
-      background: #FFF5F8;
+      border: 1.5px solid #E6CDD5;
+      background: #FCF7F9;
     }
 
     .spoiler-one-liner.masked .one-liner-text {
       color: transparent;
-      text-shadow: 0 0 10px rgba(136, 14, 79, 0.35);
+      text-shadow: 0 0 10px rgba(92, 50, 64, 0.35);
       filter: blur(4px);
     }
 
     .spoiler-one-liner.masked {
-      background: linear-gradient(135deg, #FAD4E2 0%, #F7C2D6 100%);
-      border-color: #F06292;
+      background: var(--mask-bg);
+      border-color: #E2C4CE;
     }
 
     .spoiler-one-liner.masked:hover {
-      background: linear-gradient(135deg, #F7C2D6 0%, #F4B0CA 100%);
-      border-color: #D81B60;
-      transform: translateY(-1px);
+      background: var(--mask-hover);
+      border-color: #CFA7B4;
     }
 
     .mask-prompt-overlay {
@@ -221,11 +219,11 @@
       align-items: center;
       justify-content: center;
       gap: 6px;
-      font-size: 0.98rem;
+      font-size: 0.96rem;
       font-weight: 800;
-      color: #6A103B;
-      background: rgba(252, 228, 236, 0.72);
-      border-radius: 12px;
+      color: #6B4652;
+      background: rgba(246, 234, 238, 0.76);
+      border-radius: 11px;
       pointer-events: none;
     }
 
@@ -234,14 +232,13 @@
     }
 
     .spoiler-one-liner.revealed {
-      background: linear-gradient(135deg, #FFF5F8 0%, #FFE8F0 100%);
-      border-color: #EC407A;
-      box-shadow: 0 4px 12px rgba(236, 64, 122, 0.14);
+      background: var(--reveal-bg);
+      border-color: var(--reveal-border);
       user-select: text;
     }
 
     .one-liner-text {
-      font-size: 1.08rem;
+      font-size: 1.07rem;
       font-weight: 800;
       color: var(--reveal-text);
       line-height: 1.52;
@@ -259,9 +256,9 @@
     }
 
     .check-pill-btn {
-      border: 1.5px solid #F48FB1;
+      border: 1px solid #E2C6CE;
       background: #FFFFFF;
-      color: var(--primary);
+      color: var(--text-main);
       padding: 3px 11px;
       border-radius: 999px;
       font-size: 0.82rem;
@@ -271,8 +268,9 @@
     }
 
     .check-pill-btn:hover {
-      background: #FCE4EC;
+      background: #F9EFF2;
       border-color: var(--primary);
+      color: var(--primary);
     }
 
     .check-pill-btn.active {
