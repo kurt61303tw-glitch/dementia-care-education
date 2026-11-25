@@ -6,20 +6,20 @@
   <title>每日失智衛教一句話｜50則高實證護腦知識橫幅</title>
   <style>
     :root {
-      --bg-page: #FDF8F9;
-      --banner-bg: #FFFFFF;
-      --strip-bg: #FAF0F3;
-      --border: #EEDCE1;
+      --bg-page: transparent;
+      --banner-bg: transparent;
+      --strip-bg: rgba(250, 240, 243, 0.45);
+      --border: rgba(217, 167, 182, 0.55);
       --primary: #A65E72;
-      --primary-light: #F7ECEF;
+      --primary-light: rgba(247, 236, 239, 0.65);
       --accent: #B86B82;
-      --accent-light: #FBF2F5;
+      --accent-light: rgba(251, 242, 245, 0.65);
       --text-main: #3A2E32;
       --text-muted: #7D6B71;
-      --mask-bg: #F3E5E9;
-      --mask-hover: #EBD8DE;
-      --reveal-bg: #FDF9FA;
-      --reveal-border: #D9A7B6;
+      --mask-bg: rgba(243, 229, 233, 0.85);
+      --mask-hover: rgba(235, 216, 222, 0.92);
+      --reveal-bg: rgba(253, 249, 250, 0.45);
+      --reveal-border: rgba(217, 167, 182, 0.75);
       --reveal-text: #5C3240;
     }
 
@@ -30,21 +30,25 @@
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", sans-serif;
     }
 
+    html, body {
+      background: transparent !important;
+      background-color: transparent !important;
+    }
+
     body {
-      background: transparent;
       color: var(--text-main);
-      padding: 14px 16px;
+      padding: 0;
       line-height: 1.5;
     }
 
-    /* 橫式 Notion 嵌入式主容器（寬扁型、輕度裸粉質感） */
+    /* 橫式 Notion 嵌入式主容器（完全去背透明，融入頁面底色） */
     .horizontal-banner {
       max-width: 980px;
       margin: 0 auto;
-      background: var(--banner-bg);
+      background: transparent;
       border: 1.5px solid var(--border);
       border-radius: 15px;
-      box-shadow: 0 4px 16px rgba(166, 94, 114, 0.06);
+      box-shadow: none;
       overflow: hidden;
     }
 
@@ -88,7 +92,7 @@
       font-size: 0.85rem;
       font-weight: 700;
       color: #7D4A59;
-      background: #FFFFFF;
+      background: rgba(255, 255, 255, 0.55);
       border: 1px solid #E8CFD6;
       padding: 2px 10px;
       border-radius: 6px;
@@ -98,7 +102,7 @@
       font-size: 0.8rem;
       font-weight: 600;
       color: var(--text-muted);
-      background: rgba(255, 255, 255, 0.7);
+      background: rgba(255, 255, 255, 0.45);
       padding: 2px 10px;
       border-radius: 6px;
     }
@@ -112,7 +116,7 @@
 
     .topic-select {
       border: 1px solid #E2C6CE;
-      background: #FFFFFF;
+      background: rgba(255, 255, 255, 0.65);
       color: var(--text-main);
       padding: 4px 8px;
       border-radius: 7px;
@@ -123,7 +127,7 @@
     }
 
     .mini-btn {
-      background: #FFFFFF;
+      background: rgba(255, 255, 255, 0.65);
       border: 1px solid #E2C6CE;
       color: var(--text-main);
       padding: 4px 10px;
@@ -167,7 +171,7 @@
     .hint-line {
       font-size: 0.92rem;
       color: #784858;
-      background: #FCF6F8;
+      background: rgba(252, 246, 248, 0.55);
       border-left: 3.5px solid #D49BAE;
       padding: 7px 12px;
       border-radius: 7px;
@@ -257,7 +261,7 @@
 
     .check-pill-btn {
       border: 1px solid #E2C6CE;
-      background: #FFFFFF;
+      background: rgba(255, 255, 255, 0.65);
       color: var(--text-main);
       padding: 3px 11px;
       border-radius: 999px;
