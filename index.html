@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>每日失智衛教一句話｜50則高實證護腦知識橫幅</title>
+  <style>
+    :root {
+      --bg-page: #F7F6F3;
+      --banner-bg: #FFFFFF;
+      --strip-bg: #FAF9F5;
+      --border: #E6E4DD;
+      --primary: #1F6E6C;
+      --primary-light: #E6F3F2;
+      --accent: #D96B27;
+      --accent-light: #FFF3E6;
+      --text-main: #2C2B28;
+      --text-muted: #73706A;
+      --mask-bg: #E5E3DC;
+      --mask-hover: #D8D5CC;
+      --reveal-bg: #F0FAF4;
+      --reveal-border: #86EFAC;
+      --reveal-text: #14532D;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei", "PingFang TC", "Noto Sans TC", sans-serif;
+    }
+
+    body {
+      background: transparent;
+      color: var(--text-main);
+      padding: 12px 16px;
+      line-height: 1.5;
+    }
+
+    /* 橫式 Notion 嵌入式主容器（寬扁型、一眼看完） */
+    .horizontal-banner {
+      max-width: 980px;
+      margin: 0 auto;
+      background: var(--banner-bg);
+      border: 1.5px solid var(--border);
+      border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+      overflow: hidden;
+    }
+
+    /* 頂部薄控制條：編號、分類、50題快速選單、證據來源標籤 */
+    .top-strip {
+      background: var(--strip-bg);
+      border-bottom: 1px solid var(--border);
+      padding: 8px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .strip-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pulse-dot {
+      width: 9px;
+      height: 9px;
+      background: #16A34A;
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(22, 163, 74, 0.18);
+    }
+
+    .badge-day {
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: var(--primary);
+      background: var(--primary-light);
+      padding: 2px 10px;
+      border-radius: 6px;
+    }
+
+    .badge-cat {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #9A420A;
+      background: var(--accent-light);
+      padding: 2px 10px;
+      border-radius: 6px;
+    }
+
+    .badge-source {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: #EFECE6;
+      padding: 2px 9px;
+      border-radius: 6px;
+    }
+
+    .strip-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .topic-select {
+      border: 1px solid var(--border);
+      background: #FFFFFF;
+      color: var(--text-main);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      max-width: 240px;
+      cursor: pointer;
+    }
+
+    .mini-btn {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.84rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .mini-btn:hover {
+      background: var(--primary);
+      color: #FFFFFF;
+      border-color: var(--primary);
+    }
+
+    /* 中央核心橫式主體：左邊「題目＋思考提示」，右邊「每日衛教一句話遮蔽答案」 */
+    .banner-main-row {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 18px;
+      padding: 16px 20px;
+      align-items: center;
+    }
+
+    .question-col {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-right: 8px;
+      border-right: 1.5px dashed var(--border);
+    }
+
+    .question-text {
+      font-size: 1.18rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.45;
+    }
+
+    .hint-line {
+      font-size: 0.92rem;
+      color: #8C5828;
+      background: #FFFDF8;
+      border-left: 3.5px solid var(--accent);
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    /* 右欄：遮蔽式「每日衛教一句話」答案盒 */
+    .answer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .spoiler-one-liner {
+      position: relative;
+      border-radius: 12px;
+      padding: 16px 18px;
+      cursor: pointer;
+      transition: all 0.22s ease;
+      user-select: none;
+      min-height: 84px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--border);
+      background: #FAF9F5;
+    }
+
+    .spoiler-one-liner.masked .one-liner-text {
+      color: transparent;
+      text-shadow: 0 0 10px rgba(44, 43, 40, 0.45);
+      filter: blur(4px);
+    }
+
+    .spoiler-one-liner.masked {
+      background: var(--mask-bg);
+    }
+
+    .spoiler-one-liner.masked:hover {
+      background: var(--mask-hover);
+      border-color: #C5C1B6;
+    }
+
+    .mask-prompt-overlay {
+      display: none;
+      position: absolute;
+      inset: 0;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: #3F3D39;
+      background: rgba(232, 230, 223, 0.76);
+      border-radius: 10px;
+      pointer-events: none;
+    }
+
+    .spoiler-one-liner.masked .mask-prompt-overlay {
+      display: flex;
+    }
+
+    .spoiler-one-liner.revealed {
+      background: var(--reveal-bg);
+      border-color: var(--reveal-border);
+      user-select: text;
+    }
+
+    .one-liner-text {
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: var(--reveal-text);
+      line-height: 1.5;
+    }
+
+    /* 翻開後的「我猜對了／學到了」迷你互動確認列 */
+    .feedback-mini-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .check-pill-btn {
+      border: 1px solid var(--border);
+      background: #FFFFFF;
+      color: var(--text-main);
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .check-pill-btn:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .check-pill-btn.active {
+      background: #16A34A;
+      color: #FFFFFF;
+      border-color: #16A34A;
+    }
+
+    @media (max-width: 720px) {
+      .banner-main-row {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .question-col {
+        border-right: none;
+        border-bottom: 1.5px dashed var(--border);
+        padding-right: 0;
+        padding-bottom: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 橫式 Notion 嵌入式「每日失智衛教一句話」橫幅 -->
+  <div class="horizontal-banner" id="bannerApp"></div>
+
+  <script>
+    /*************************************************************************
+     * 50 則高證據等級「每日失智衛教一句話」題庫
+     * 實證來源涵蓋：
+     *  - WHO《降低認知衰退與失智症風險指引》
+     *  - 《Lancet（刺胳針）》2020/2024 失智症預防、介入與照護委員會報告
+     *  - 美國國家老齡化研究所 (NIA) / 麥得飲食 (MIND Diet, Morris et al.)
+     *  - 台灣衛生福利部國民健康署 & 台灣失智症協會 (TADA) 臨床衛教指引
+     *************************************************************************/
+    const EVIDENCE_TOPICS_50 = [
+      // 【一、科學護腦飲食（麥得飲食 MIND Diet 與營養實證）：第 1 ~ 12 題】
+      {
+        id: 1,
+        cat: '護腦飲食・麥得飲食',
+        source: '實證來源：美國 Rush 大學 MIND 飲食研究',
+        q: '想靠日常飲食預防失智症，科學界最推薦的「麥得飲食（MIND Diet）」每天必吃哪一類蔬菜？',
+        hint: '💡 提示語：想一想，菠菜、地瓜葉、綠花椰菜這類蔬菜是什麼顏色？',
+        a: '【每日衛教一句話】每天至少吃 1 碗「深綠色葉菜類」（如菠菜、地瓜葉、青江菜），富含葉酸與葉黃素，研究證實能讓大腦生理年齡年輕 7.5 歲！'
+      },
+      {
+        id: 2,
+        cat: '護腦飲食・水果首選',
+        source: '實證來源：MIND 飲食指引／哈佛公衛學院',
+        q: '在所有水果當中，唯一被科學防失智飲食點名「能保護腦神經、延緩記憶衰退」的是哪一類水果？',
+        hint: '💡 提示語：想一想，藍莓、草莓、桑椹都屬於哪一類富含花青素的水果？',
+        a: '【每日衛教一句話】每週至少吃 2 次「莓果類水果」（如藍莓、草莓、桑椹），其豐富的花青素能穿越血腦屏障、減少大腦氧化發炎！'
+      },
+      {
+        id: 3,
+        cat: '護腦飲食・好油脂',
+        source: '實證來源：WHO 與地中海／麥得飲食實證',
+        q: '家裡炒菜或涼拌時，把豬油與奶油換成哪一種植物油，最能保護腦血管、降低失智風險？',
+        hint: '💡 提示語：想一想，地中海居民最愛用的單元不飽和脂肪酸好油是什麼油？',
+        a: '【每日衛教一句話】烹調用油首選「特級初榨橄欖油（或苦茶油）」，並少吃人造奶油與油炸物，可減少血管硬化與大腦類澱粉蛋白堆積！'
+      },
+      {
+        id: 4,
+        cat: '護腦飲食・Omega-3',
+        source: '實證來源：美國國家老齡化研究所 (NIA)',
+        q: '吃魚能補腦是真的嗎？每週建議吃幾次富含 Omega-3（DHA）的深海魚最能預防失智？',
+        hint: '💡 提示語：想一想，鮭魚、鯖魚、秋刀魚每個禮拜大概要吃幾次才夠？',
+        a: '【每日衛教一句話】每週至少吃 1～2 次「富含 Omega-3 的魚類」（如鯖魚、秋刀魚、鮭魚），DHA 是構成腦神經細胞膜最重要的保護成分！'
+      },
+      {
+        id: 5,
+        cat: '護腦飲食・點心替換',
+        source: '實證來源：台灣國健署／麥得飲食指引',
+        q: '下午嘴饞想吃零食時，把餅乾蛋糕換成哪一種「原味種子類食物」，每週吃 5 次就能護腦護血管？',
+        hint: '💡 提示語：想一想，核桃、杏仁、腰果屬於哪一類富含維生素 E 的食物？',
+        a: '【每日衛教一句話】每天吃「一茶匙無調味堅果」（如核桃、杏仁、腰果，每週至少 5 次），富含維生素 E 與健康油脂，能保護腦細胞不受自由基傷害！'
+      },
+      {
+        id: 6,
+        cat: '護腦飲食・蛋白質來源',
+        source: '實證來源：MIND 飲食研究',
+        q: '黃豆、黑豆、毛豆與豆腐等「豆製品」，在防失智飲食中建議每週至少吃幾次來取代紅肉？',
+        hint: '💡 提示語：想一想，植物性蛋白質沒有紅肉的飽和脂肪，每週該吃幾餐以上？',
+        a: '【每日衛教一句話】每週至少吃 3～4 次「全豆類與大豆製品」（如毛豆、黑豆、豆腐），補充卵磷脂與優質蛋白，同時把豬牛羊等紅肉減少到每週 4 份以下！'
+      },
+      {
+        id: 7,
+        cat: '護腦飲食・傷腦地雷',
+        source: '實證來源：阿茲海默症協會 (Alzheimer’s Association)',
+        q: '除了油炸物之外，哪一種「高糖分食物」吃太多會造成腦部胰島素阻抗，被科學家稱為大腦的隱形殺手？',
+        hint: '💡 提示語：想一想，手搖含糖飲料、精緻糕點裡面的什麼成分會讓大腦發炎？',
+        a: '【每日衛教一句話】嚴格減少「含糖手搖飲與精緻甜點」（每週不超過 5 次），過多精製糖會引發腦部慢性發炎與血管損傷，大幅提高阿茲海默症風險！'
+      },
+      {
+        id: 8,
+        cat: '護腦飲食・主食選擇',
+        source: '實證來源：衛福部國健署／MIND 飲食',
+        q: '把每天吃的三餐白米飯、白吐司，替換成哪一類主食，能提供大腦穩定的血糖與維生素 B 群？',
+        hint: '💡 提示語：想一想，糙米、燕麥、紫米、全麥麵包屬於哪一類穀物？',
+        a: '【每日衛教一句話】每天至少有 3 份主食選用「未精製全穀雜糧」（如糙米、燕麥、五穀飯），富含維生素 B 群與膳食纖維，能穩定血糖並維持神經傳導健康！'
+      },
+      {
+        id: 9,
+        cat: '護腦飲食・維生素B12',
+        source: '實證來源：台灣失智症協會／臨床神經學指引',
+        q: '長輩如果長期吃全素，很容易缺乏哪一種維生素，進而出現「手腳麻木、記憶力減退」的可逆性假性失智？',
+        hint: '💡 提示語：想一想，主要存在於蛋、奶、肉類中，造血與維持神經髓鞘必備的 B 群是哪一個？',
+        a: '【每日衛教一句話】長期吃素的長輩務必定期抽血檢查並補充「維生素 B12 與葉酸」，缺乏 B12 會直接導致神經受損與記憶衰退，及時補充就能明顯改善！'
+      },
+      {
+        id: 10,
+        cat: '護腦飲食・水分補充',
+        source: '實證來源：老年醫學與臨床護理實證',
+        q: '長輩因為口渴感覺退化常不愛喝水，當身體輕度脫水時，大腦會在短短幾小時內出現什麼危險變化？',
+        hint: '💡 提示語：想一想，缺水會讓血液變濃、電解質失衡，長輩會不會突然變得昏沉混亂？',
+        a: '【每日衛教一句話】長輩每天應分次喝足 1500～2000cc 水分（心腎疾病者依醫囑），因為「脫水」是引發長者急性意識混亂（譫妄）、泌尿道感染與跌倒的頭號元兇！'
+      },
+      {
+        id: 11,
+        cat: '護腦飲食・飲酒警訊',
+        source: '實證來源：《Lancet（刺胳針）》2024 失智預防報告',
+        q: '以前常聽說喝酒助眠，但最新醫學實證指出，過量飲酒對大腦體積與失智風險有什麼直接影響？',
+        hint: '💡 提示語：想一想，酒精具有神經毒性，喝太多會不會讓大腦海馬迴萎縮得更快？',
+        a: '【每日衛教一句話】避免過量飲酒（每週酒精攝取勿超過 14 單位，能不喝更好），研究證實長期飲酒會直接加速大腦海馬迴萎縮並導致早發型失智症！'
+      },
+      {
+        id: 12,
+        cat: '護腦飲食・高對比餐具',
+        source: '實證來源：波士頓大學阿茲海默症視覺研究',
+        q: '失智長輩食慾變差、吃不下飯時，為什麼只要把「白色飯碗」換成「橘紅色或深藍色飯碗」就能多吃 25%？',
+        hint: '💡 提示語：想一想，白碗裝白飯在視力退化的長輩眼裡看起來像什麼？',
+        a: '【每日衛教一句話】失智長輩視覺對比度退化，「白碗裝白飯」會看不清楚食物；改用「鮮豔紅、橘、深藍色的高對比餐具」，研究證實能提升 25% 進食量與 84% 喝水量！'
+      },
+
+      // 【二、科學護腦運動與身體活動：第 13 ~ 22 題】
+      {
+        id: 13,
+        cat: '護腦運動・有氧運動量',
+        source: '實證來源：WHO《降低失智風險全球指引》',
+        q: '世界衛生組織（WHO）強烈建議，成年人與長者每週至少要做多少分鐘的「中等強度有氧運動」來預防失智？',
+        hint: '💡 提示語：想一想，如果一週運動 5 天、每次快走 30 分鐘，加起來是多少分鐘？',
+        a: '【每日衛教一句話】每週累積至少「150 分鐘中等強度有氧運動」（如快走、超慢跑、游泳，走到微喘仍能講話的程度），能促進大腦分泌神經滋養因子（BDNF），讓海馬迴變大！'
+      },
+      {
+        id: 14,
+        cat: '護腦運動・雙重任務運動',
+        source: '實證來源：日本國立長壽醫療研究中心 (Cognicise)',
+        q: '為什麼「一邊踏步走路、一邊算算術或玩接龍」比單純悶頭走路，更能有效預防失智症？',
+        hint: '💡 提示語：想一想，手腳在動的時候嘴巴也在動腦，大腦是不是要同時開啟兩個區域？',
+        a: '【每日衛教一句話】最推薦「雙重任務運動（邊動身體邊動腦，如邊踏步邊算 100 減 3、或邊拍手邊唱老歌）」，能同時活化運動皮質與前額葉，防失智效果比單純散步高出數倍！'
+      },
+      {
+        id: 15,
+        cat: '護腦運動・肌力與防跌',
+        source: '實證來源：台灣國健署／老年醫學會實證',
+        q: '除了走路之外，長輩每週做 2 次「深蹲扶椅站立、彈力帶」等肌力訓練，跟保護大腦有什麼關係？',
+        hint: '💡 提示語：想一想，大腿有力才不會跌倒撞到頭，而且肌肉收縮時也會分泌護腦荷爾蒙喔！',
+        a: '【每日衛教一句話】每週至少 2 次「下肢肌力與阻力訓練」（如扶穩椅背練習坐站、舉水瓶），不只預防肌少症與跌倒腦傷，肌肉收縮分泌的肌動蛋白（Irisin）更能直接保護腦神經！'
+      },
+      {
+        id: 16,
+        cat: '護腦運動・太極與平衡',
+        source: '實證來源：《美國老年醫學會期刊 (JAGS)》統合分析',
+        q: '哪一種需要「記招式順序、慢速轉移重心」的東方傳統運動，被多篇國際醫學期刊證實能顯著改善輕度認知障礙？',
+        hint: '💡 提示語：想一想，公園裡長輩常打的、動作柔緩又講究呼吸平衡的是什麼拳？',
+        a: '【每日衛教一句話】練習「太極拳（或八段錦、元極舞）」需同時記憶招式順序與控制身體平衡，臨床研究證實能顯著提升長者的執行功能、工作記憶並減少跌倒！'
+      },
+      {
+        id: 17,
+        cat: '護腦運動・手指精細運動',
+        source: '實證來源：神經解剖學「大腦皮質小人圖」原理',
+        q: '俗話說「心靈手巧」，為什麼常做「手指操、摺紙、編織、彈樂器」等手指精細動作能強烈刺激大腦？',
+        hint: '💡 提示語：想一想，在大腦運動與感覺皮質裡，負責控制「十根手指頭」的腦區面積大不大？',
+        a: '【每日衛教一句話】雙手十指在大腦皮質佔據極大的控制面積，每天做「手指律動操、摺紙、園藝或畫畫」，能大幅增加大腦血流量並活化頂葉與額葉神經連結！'
+      },
+      {
+        id: 18,
+        cat: '護腦運動・打破久坐',
+        source: '實證來源：《JAMA》美國醫學會期刊研究',
+        q: '長輩如果每天坐在電視機前超過 10 小時不動，即使偶爾有散步，對失智症風險會有什麼影響？',
+        hint: '💡 提示語：想一想，長時間久坐不動會讓腦部血液循環變慢，坐超過幾小時風險就會飆升？',
+        a: '【每日衛教一句話】《JAMA》研究警告：每天久坐超過 10 小時會顯著增加失智風險！請養成「每坐 50 分鐘就站起來走動、倒水或伸展 5 分鐘」的好習慣！'
+      },
+      {
+        id: 19,
+        cat: '護腦運動・戶外日照走路',
+        source: '實證來源：睡眠醫學與失智照護實證',
+        q: '為什麼建議長輩盡量在「早上 8～10 點去戶外陽光下散步」，而不是只在室內走廊走動？',
+        hint: '💡 提示語：想一想，早晨的陽光照射眼睛視網膜後，能幫大腦重設什麼生理時鐘、減少傍晚吵鬧？',
+        a: '【每日衛教一句話】早晨到戶外邊曬太陽邊散步 20～30 分鐘，陽光能幫大腦重設生理時鐘、合成維生素 D，有效改善失智長輩「傍晚焦躁（日落症候群）」與半夜失眠！'
+      },
+      {
+        id: 20,
+        cat: '護腦運動・輪椅長輩怎麼動',
+        source: '實證來源：長照自立支援與復健護理指引',
+        q: '已經需要坐輪椅、走不遠的長輩，可以做什麼安全運動來持續刺激大腦、預防退化？',
+        hint: '💡 提示語：想一想，坐在穩固的椅子上，能不能做「坐姿抬腿踏步、雙手拋接氣球或拍手唱歌」？',
+        a: '【每日衛教一句話】行動不便的長輩每天可做「坐姿踏步、雙手向上伸展、拋接軟球或拍手伴唱」，只要讓心跳微升、手眼協調運作，同樣能達到活化大腦的效果！'
+      },
+      {
+        id: 21,
+        cat: '護腦運動・跳舞與節奏',
+        source: '實證來源：《新英格蘭醫學雜誌 (NEJM)》休閒活動研究',
+        q: '《新英格蘭醫學雜誌》追蹤發現，在所有體能活動中，哪一種結合「音樂節奏、記舞步與社交」的運動降低失智風險效果最驚人？',
+        hint: '💡 提示語：想一想，聽到音樂要踩對拍子、還要跟舞伴配合記動作的是什麼活動？',
+        a: '【每日衛教一句話】常跳「社交舞、排舞或健康律動操」能降低高達 76% 的失智風險，因為它同時結合了「有氧運動＋聽覺節奏＋空間記憶舞步＋人際互動」四大護腦要素！'
+      },
+      {
+        id: 22,
+        cat: '護腦運動・防廢用症候群',
+        source: '實證來源：長照機構防跌與自立支援實證',
+        q: '家屬常說「長輩失智怕跌倒，整天坐輪椅不要讓他站起來最安全」，這種做法為什麼反而會讓長輩摔更重？',
+        hint: '💡 提示語：想一想，大腿肌肉兩週不站立就會快速萎縮（肌少症），半夜他自己爬起來上廁所時會發生什麼事？',
+        a: '【每日衛教一句話】越怕跌倒而不讓長輩站立走動，下肢肌力每週會流失 10% 以上（廢用症候群），導致半夜自己起身時軟腳重摔；「在安全陪伴與扶手保護下天天練站與走」才是真正的防跌！'
+      },
+
+      // 【三、《刺胳針》14 大可逆轉科學防失智關鍵（慢病、感官與生活型態）：第 23 ~ 35 題】
+      {
+        id: 23,
+        cat: '科學預防・頭號危險因子',
+        source: '實證來源：《Lancet（刺胳針）》失智症防治委員會',
+        q: '權威醫學期刊《刺胳針》公布全球 14 項可預防失智的危險因子中，排名第一名（影響最大）竟然是哪一個感官問題？',
+        hint: '💡 提示語：想一想，長輩耳朵重聽卻不戴助聽器，聽不到別人講話時大腦會怎麼樣？',
+        a: '【每日衛教一句話】「中年與老年聽力受損（重聽）」是失智症排名第 1 的可預防危險因子！定期清耳垢、及早配戴助聽器保持聽覺刺激，能大幅降低失智風險！'
+      },
+      {
+        id: 24,
+        cat: '科學預防・視力保護',
+        source: '實證來源：《Lancet》2024 最新新增失智危險因子',
+        q: '2024 年《刺胳針》最新報告正式將「未治療的視力退化」列為失智症危險因子，長輩哪兩種眼疾及早處理就能護腦？',
+        hint: '💡 提示語：想一想，哪一種眼疾只要做個簡單的門診小手術換水晶體，或配一副合適的眼鏡就能看清楚？',
+        a: '【每日衛教一句話】長輩若有「白內障」或老花度數不合應及早治療與配鏡；研究證實接受白內障手術恢復清晰視力後，能減少近 30% 的失智症發生風險！'
+      },
+      {
+        id: 25,
+        cat: '科學預防・血壓控制',
+        source: '實證來源：SPRINT-MIND 跨國臨床試驗／WHO',
+        q: '高血壓會讓腦部充滿微小血管病變，醫學實證建議中年開始應把「收縮壓」控制在多少以下最能預防血管型與阿茲海默失智？',
+        hint: '💡 提示語：想一想，標準正常血壓的收縮壓（高的那個數字）是 120 還是 130 以下？',
+        a: '【每日衛教一句話】自 40 歲起將收縮壓穩定控制在「130 mmHg 以下」（理想為 120 mmHg），是唯一經大型臨床試驗證實能顯著減少輕度認知障礙與腦白質病變的護血管關鍵！'
+      },
+      {
+        id: 26,
+        cat: '科學預防・血糖與糖尿病',
+        source: '實證來源：台灣失智症協會／美國糖尿病學會',
+        q: '為什麼阿茲海默症又被科學家稱為「第三型糖尿病」？糖尿病患者除了控糖，最怕發生哪一種會瞬間傷腦的狀況？',
+        hint: '💡 提示語：想一想，高血糖會傷血管，那如果吃降血糖藥卻沒吃飯導致「血糖太低（手抖冒冷汗）」對腦細胞有什麼影響？',
+        a: '【每日衛教一句話】糖尿病會使失智風險增加近 2 倍！長輩控糖除了避免高血糖傷血管，更要嚴防「嚴重低血糖（會直接造成腦細胞不可逆壞死）」，務必按時定量進食與服藥！'
+      },
+      {
+        id: 27,
+        cat: '科學預防・壞膽固醇',
+        source: '實證來源：《Lancet》2024 最新新增失智危險因子',
+        q: '抽血報告裡的「低密度膽固醇（LDL，俗稱壞膽固醇）」過高，除了會引起心肌梗塞，對大腦有什麼危害？',
+        hint: '💡 提示語：想一想，壞膽固醇塞住腦部小血管，還會促進哪一種失智致病蛋白堆積？',
+        a: '【每日衛教一句話】《刺胳針》2024 報告最新證實：「高密度壞膽固醇（LDL 過高）」會加速腦血管硬化與類澱粉蛋白沉積，透過飲食運動與醫囑藥物控制膽固醇就是直接保護大腦！'
+      },
+      {
+        id: 28,
+        cat: '科學預防・社交與孤獨',
+        source: '實證來源：WHO／台灣國健署失智防治指南',
+        q: '退休後「整天待在家裡看電視、不跟朋友來往」的孤獨長輩，失智風險比常參加社區活動的長輩高出多少？',
+        hint: '💡 提示語：想一想，跟別人聊天時需要聽懂、思考、看表情再回應，這是大腦最高級的運動！',
+        a: '【每日衛教一句話】「社交孤立與寂寞」會讓失智風險大增 50% 以上！鼓勵長輩每週去社區據點、日照中心、當志工或跟親友泡茶聊天，人際互動是最好的大腦綜合維他命！'
+      },
+      {
+        id: 29,
+        cat: '科學預防・睡眠排毒',
+        source: '實證來源：《Science（科學）》腦部膠淋巴系統研究',
+        q: '為什麼「每天睡飽 7～8 小時的深層睡眠」對預防阿茲海默症超級重要？大腦在我們睡著時在做什麼事？',
+        hint: '💡 提示語：想一想，大腦白天工作產生了很多「類澱粉蛋白垃圾」，哪一個時間才會打開水龍頭把垃圾洗掉？',
+        a: '【每日衛教一句話】大腦的「排毒清潔系統（膠淋巴系統）」只在夜間深層睡眠時啟動，能把導致失智的「β-類澱粉蛋白毒素」沖洗代謝掉；若長期打呼缺氧（睡眠呼吸中止症）應及早就醫！'
+      },
+      {
+        id: 30,
+        cat: '科學預防・終身學習（認知儲備）',
+        source: '實證來源：哥倫比亞大學「認知儲備理論 (Cognitive Reserve)」',
+        q: '為什麼常玩「記憶遊戲、打麻將、桌遊、學新手機功能或看書」的長輩，就算大腦開始退化，也比較不會發病？',
+        hint: '💡 提示語：想一想，常常動腦挑戰新事物，就像幫大腦多修了好幾條「備用替代道路」！',
+        a: '【每日衛教一句話】每天動腦玩認知遊戲、桌遊或學習新事物能增加「大腦認知存款（神經備用迴路）」，研究顯示高認知活動可延緩失智症發病達 4～5 年以上！'
+      },
+      {
+        id: 31,
+        cat: '科學預防・戒菸與空污',
+        source: '實證來源：WHO／《Lancet》失智防治報告',
+        q: '抽菸與二手菸除了傷肺，為什麼也會讓失智症風險大幅飆升？幾歲戒菸才來得及？',
+        hint: '💡 提示語：想一想，尼古丁與一氧化碳會讓腦血管收縮缺氧，就算 60、70 歲戒菸有用嗎？',
+        a: '【每日衛教一句話】吸菸會造成腦部微血管慢性缺氧與發炎；研究證實「任何年紀戒菸都來得及」，長者成功戒菸數年後，其認知衰退速度就能降回與不吸菸者相同！'
+      },
+      {
+        id: 32,
+        cat: '科學預防・保護頭部外傷',
+        source: '實證來源：《Lancet》失智症防治委員會',
+        q: '長輩騎機車、腳踏車或在浴室滑倒「撞到頭（腦震盪）」，為什麼幾年之後得失智症的機率會明顯上升？',
+        hint: '💡 提示語：想一想，頭部受到撞擊會不會啟動大腦內部的慢性神經發炎與 Tau 蛋白糾結？',
+        a: '【每日衛教一句話】頭部外傷（腦震盪或跌倒撞頭）是失智症的重要誘發因子！外出騎乘務必戴安全帽，浴室與床邊加裝防滑扶手並移除地面電線雜物，嚴防跌倒撞頭！'
+      },
+      {
+        id: 33,
+        cat: '科學預防・口腔與牙周病',
+        source: '實證來源：日本東北大學／美國老年醫學期刊咀嚼研究',
+        q: '「牙齒掉光不裝假牙、嚴重牙周病不治療」為什麼會讓失智風險增加？「咀嚼」對大腦有什麼好處？',
+        hint: '💡 提示語：想一想，我們用力咬東西時，牙根韌帶會不會把訊號傳回大腦、促進腦部血流？',
+        a: '【每日衛教一句話】牙周病細菌會隨血液引發腦部發炎，而「用力咀嚼」能大幅增加大腦海馬迴血流量；長輩缺牙務必配戴合適假牙並每天刷牙清牙縫，保住咀嚼力就是保住記憶力！'
+      },
+      {
+        id: 34,
+        cat: '科學預防・憂鬱情緒治療',
+        source: '實證來源：台灣失智症協會／《Lancet》報告',
+        q: '長輩退休或喪偶後如果長期心情憂鬱、提不起勁，為什麼「及早治療老年憂鬱症」也是預防真失智的重要一環？',
+        hint: '💡 提示語：想一想，長期憂鬱時體內壓力荷爾蒙（皮質醇）過高，會不會直接毒害海馬迴腦細胞？',
+        a: '【每日衛教一句話】長期憂鬱會使體內壓力荷爾蒙居高不下、直接加速海馬迴萎縮；多給予長輩陪伴成就感並及早就醫治療老年憂鬱，不僅能逆轉「假性失智」，更能保護大腦！'
+      },
+      {
+        id: 35,
+        cat: '科學預防・中年肥胖控制',
+        source: '實證來源：WHO《降低失智風險指引》',
+        q: '控制體重與腰圍（避免肥胖）對預防失智症有效嗎？到了高齡 75 歲以後體重反而要注意什麼？',
+        hint: '💡 提示語：想一想，中年（40~65歲）要防肥胖三高，但高齡長輩如果突然變太瘦（肌少營養不良）好嗎？',
+        a: '【每日衛教一句話】中年期（65 歲前）控制腰圍、避免肥胖可降低三高與失智風險；但進入高齡期後則要避免「非預期體重減輕與過瘦」，應攝取足夠蛋白質預防肌少症！'
+      },
+
+      // 【四、早期警訊辨識與溫柔照護一句話（台灣失智症協會 & 臨床實證）：第 36 ~ 50 題】
+      {
+        id: 36,
+        cat: '早期警訊・健忘vs失智',
+        source: '實證來源：台灣失智症協會「十大警訊」',
+        q: '每個人老了都會忘東忘西，怎麼用一句話分辨長輩是「正常老化健忘」還是「失智症早期警訊」？',
+        hint: '💡 提示語：想一想，別人提醒你之後，想得起來跟完全沒印象，哪一個才是失智？',
+        a: '【每日衛教一句話】正常老化是「偶爾忘記細節，但經別人提醒會拍大腿想起來」；失智症則是「整段記憶沒存檔（連自己吃過飯、去過哪都完全沒印象），提醒也想不起來」！'
+      },
+      {
+        id: 37,
+        cat: '早期警訊・AD-8 篩檢表',
+        source: '實證來源：衛福部國健署／華盛頓大學 AD-8 量表',
+        q: '家屬用「AD-8 極早期失智症篩檢量表（共 8 題）」幫長輩做觀察時，只要有幾題以上出現改變就應該帶去看醫生？',
+        hint: '💡 提示語：想一想，8 題裡面（如重複問話、忘記幾月、不會用遙控器、算錢困難），切截點是幾分？',
+        a: '【每日衛教一句話】使用 AD-8 量表觀察長輩「跟以前的他自己相比是否有退步」，8 題中只要勾選達「2 題（含）以上」，就應儘早帶往醫院「神經內科」或「精神科（記憶門診）」檢查！'
+      },
+      {
+        id: 38,
+        cat: '早期警訊・金錢與被騙',
+        source: '實證來源：美國國家老齡化研究所 (NIA) 早期徵兆',
+        q: '以前很精明會算帳的長輩，最近卻常算錯買菜找零、忘記繳水電費，或輕易相信電話推銷買了一堆不需要的保健品，這代表什麼？',
+        hint: '💡 提示語：想一想，「處理財務與判斷力變差」是不是失智症最容易被忽略的極早期警訊？',
+        a: '【每日衛教一句話】「財務處理困難與判斷力下降（如常算錯找零、重複買同樣東西、容易受騙）」往往比嚴重忘記事情更早出現，是極早期失智症的重要警訊！'
+      },
+      {
+        id: 39,
+        cat: '早期警訊・空間與迷路',
+        source: '實證來源：台灣失智症協會「十大警訊」',
+        q: '長輩去走了 20 年的菜市場或公園，最近卻突然在熟悉的路口轉錯彎、不知道怎麼走回家，這在醫學上代表哪個腦區退化了？',
+        hint: '💡 提示語：想一想，在熟悉的地方迷路是正常老化，還是失智症的十大警訊之一？',
+        a: '【每日衛教一句話】「在原本熟悉的地方迷路（空間定向感退化）」絕對不是正常老化！一旦發生過一次，應立即就醫評估，並幫長輩申請愛心手鍊、GPS 定位器與指紋建檔防走失！'
+      },
+      {
+        id: 40,
+        cat: '早期警訊・家電操作困難',
+        source: '實證來源：臨床 IADL 工具性日常功能評估',
+        q: '長輩以前很會用洗衣機、電視遙控器或瓦斯爐，最近卻常按錯、不會切換頻道或忘記關火，這是什麼能力退化了？',
+        hint: '💡 提示語：想一想，原本熟悉的工具突然不會照步驟操作，是不是失智症十大警訊的「無法勝任原本熟悉事務」？',
+        a: '【每日衛教一句話】當長輩開始「不會操作原本熟悉的電視遙控器、電話、洗衣機或煮菜忘記調味步驟」，代表大腦執行計畫功能退化，應協助換成防乾燒安全爐具並就醫檢查！'
+      },
+      {
+        id: 41,
+        cat: '照護黃金句・日落症候群',
+        source: '實證來源：台灣失智症協會照護指引',
+        q: '失智長輩一到傍晚太陽下山就焦躁吵著「我要回家」（日落症候群），照顧者最不該做的事與最推薦的做法是什麼？',
+        hint: '💡 提示語：想一想，傍晚光線變暗長輩沒安全感，提早開燈並順著他的心意陪他喝杯溫茶有用嗎？',
+        a: '【每日衛教一句話】傍晚焦躁吵回家時，切勿爭辯「這裡就是你家」；應在「下午 3 點提早打開室內充足暖光」減少昏暗感，先同理安撫再邀他幫忙摺毛巾或喝熱湯轉移注意力！'
+      },
+      {
+        id: 42,
+        cat: '照護黃金句・被竊妄想',
+        source: '實證來源：臨床非藥物行為支持 (BPSD) 指引',
+        q: '長輩找不到錢包或存摺，生氣一口咬定「是被你偷走的！」當下怎麼回應才能平息怒火？',
+        hint: '💡 提示語：想一想，跟他吵「我沒偷、是你自己忘記」有用嗎？如果陪他一起去他常藏東西的抽屜找呢？',
+        a: '【每日衛教一句話】面對被竊妄想掌握「不爭辯、先同理、陪他找、備替品」四字訣：溫柔說「不見了一定很急，我陪您找」，再引導去他常藏東西的口袋或抽屜讓他自己翻到！'
+      },
+      {
+        id: 43,
+        cat: '照護黃金句・急性譫妄求救',
+        source: '實證來源：老年醫學急性譫妄 (Delirium) 臨床指引',
+        q: '如果失智長輩昨天還好好的，今天卻「在一夜之間突然胡言亂語、日夜顛倒、認不得人」，這代表失智突然惡化嗎？',
+        hint: '💡 提示語：想一想，失智是慢慢退化的；一兩天內突然大混亂，通常是身體發炎感染或便秘引起的什麼急症？',
+        a: '【每日衛教一句話】失智不會在一夜之間突然嚴重惡化！若長輩「一兩天內突然意識混亂（急性譫妄）」，高達 8 成是尿道感染、肺炎、脫水、便秘或藥物副作用的求救訊號，必須立刻檢查身體！'
+      },
+      {
+        id: 44,
+        cat: '照護黃金句・零衝突溝通',
+        source: '實證來源：人本失智照護 (Person-Centered Care) 原則',
+        q: '跟失智長輩講話時，為什麼「不考他記憶（別問我是誰？剛吃什麼？）」以及「改用二選一問法」這麼重要？',
+        hint: '💡 提示語：想一想，考他答不出來的問題只會讓他挫折生氣；把肉包跟稀飯拿在手上讓他指一個是不是超輕鬆？',
+        a: '【每日衛教一句話】與失智長輩溝通牢記「不爭辯對錯、不考他記憶、不問開放式問題」；把實物拿在手上用「二選一問法（想吃肉包還是稀飯？）」，長輩看一眼就能輕鬆做主！'
+      },
+      {
+        id: 45,
+        cat: '照護黃金句・抗拒洗澡化解',
+        source: '實證來源：長照機構減敏沐浴護理實證',
+        q: '長輩好幾天沒洗澡卻堅持「我剛洗過了！」一拉去浴室就生氣反抗，用哪一句話和技巧最能順利幫他清潔？',
+        hint: '💡 提示語：想一想，避開「洗澡」兩個字，改說「去泡熱水腳擦擦汗」，並讓他披著大毛巾不一次脫光會不會比較安心？',
+        a: '【每日衛教一句話】長輩拒洗時別提「洗澡」，改邀他「去泡泡熱水腳、用溫毛巾擦擦汗舒服一下」；先預熱浴室、讓長輩披著大毛巾保留隱私，並由手腳末端慢慢往上沖溫水！'
+      },
+      {
+        id: 46,
+        cat: '照護黃金句・懷舊治療賦權',
+        source: '實證來源：非藥物懷舊療法 (Reminiscence Therapy) 實證',
+        q: '失智長輩雖然記不得昨天的事，卻對「40 年前年輕時的事」一清二楚，我們該怎麼善用這個特點讓他重拾笑容？',
+        hint: '💡 提示語：想一想，拿出老照片或放以前的老歌，請長輩當「老師」教你他年輕時的拿手本領，他會有多開心？',
+        a: '【每日衛教一句話】失智長輩的「遠期記憶」保留最久！常播放他年輕時的老歌、看老照片，並請長輩當「老師」教你他以前拿手的工作或私房菜，能大幅提升自信並減少憂鬱躁動！'
+      },
+      {
+        id: 47,
+        cat: '照護黃金句・問題行為背後是疼痛',
+        source: '實證來源：國際 BPSD 非藥物處置 DICE 指引',
+        q: '已經不太會說話的中重度失智長輩，如果突然出現「皺眉呻吟、拒絕穿衣服或揮手打人」，第一時間要先檢查什麼？',
+        hint: '💡 提示語：想一想，不會講話的長輩沒辦法說「我牙齒痛、我肚子痛」，他會用什麼行為來求救？',
+        a: '【每日衛教一句話】失智長輩不會無緣無故發脾氣，突發的躁動與打人往往是「講不出來的身體疼痛或不適（如牙痛、關節痛、便秘脹氣、想尿尿）」，找出痛點解除就能平復情緒！'
+      },
+      {
+        id: 48,
+        cat: '照護黃金句・口腔清潔防肺炎',
+        source: '實證來源：老年牙科與長照感染控制實證',
+        q: '幫失智長輩每天刷牙、清潔假牙與舌苔，除了防口臭之外，在醫學上還能直接預防哪一種長照機構最致命的疾病？',
+        hint: '💡 提示語：想一想，嘴巴裡的細菌如果隨著口水或喝水嗆進肺部，會引發什麼肺炎？',
+        a: '【每日衛教一句話】臨床實證顯示：每天三餐後幫長輩落實口腔與假牙清潔，能減少口咽部細菌被薔入肺部，直接降低高達 40% 的致命「吸入性肺炎」發生率！'
+      },
+      {
+        id: 49,
+        cat: '照護黃金句・照顧者喘息與 1966',
+        source: '實證來源：衛生福利部長期照顧司／台灣失智症協會',
+        q: '照顧失智長輩是一場馬拉松，家屬或照顧者如果覺得快撐不下去時，台灣有哪兩支最重要、免費的官方求助專線？',
+        hint: '💡 提示語：想一想，衛福部長照專線是 4 個數字（19__），失智症關懷專線又是 0800 幾號？',
+        a: '【每日衛教一句話】照顧者請記得「先照顧好自己，才有力氣愛長輩」！善用衛福部長照專線「1966」（申請日照中心與喘息服務）以及失智症關懷專線「0800-474-580（失智時，我幫您）」！'
+      },
+      {
+        id: 50,
+        cat: '照護黃金句・留住溫暖的情緒記憶',
+        source: '實證來源：神經科學「杏仁核情緒記憶保留」實證',
+        q: '既然失智長輩「過 10 分鐘就會忘記我們剛剛陪他做過什麼、說過什麼」，那我們溫柔對待他、帶他玩遊戲的意義是什麼？',
+        hint: '💡 提示語：想一想，大腦記住「事情」的海馬迴雖然退化了，但記住「開心或委屈感覺」的杏仁核還在不在？',
+        a: '【每日衛教一句話】神經科學證實：失智長輩雖然會忘記「發生過的事（海馬迴退化）」，但心裡會一整天留住「被溫柔對待的安心與快樂感覺（杏仁核保留）」——你的每一個微笑都算數！'
+      }
+    ];
+
+    /*************************************************************************
+     * 依照真實日曆算出今天是第幾題（每天自動輪替 1 ~ 50 題）
+     *************************************************************************/
+    function getTodayTopicIndex() {
+      const now = new Date();
+      const start = new Date(now.getFullYear(), 0, 0);
+      const dayOfYear = Math.floor((now - start) / (1000 * 60 * 60 * 24));
+      return dayOfYear % EVIDENCE_TOPICS_50.length;
+    }
+
+    let state = {
+      currentIdx: getTodayTopicIndex(),
+      isMasked: true,      // true = 灰色遮蔽中，點一下變 false 揭曉答案
+      userSelfCheck: null  // 'bingo' | 'learned' | null
+    };
+
+    function renderBanner() {
+      const item = EVIDENCE_TOPICS_50[state.currentIdx];
+      const todayIdx = getTodayTopicIndex();
+      const isToday = (state.currentIdx === todayIdx);
+
+      // 建立 50 題快速下拉選單
+      const optionsHtml = EVIDENCE_TOPICS_50.map((t, idx) => {
+        const todayMark = (idx === todayIdx) ? '【今日】' : '';
+        return `<option value="${idx}" ${idx === state.currentIdx ? 'selected' : ''}>
+          #${t.id} ${todayMark}${t.cat}
+        </option>`;
+      }).join('');
+
+      const app = document.getElementById('bannerApp');
+      app.innerHTML = `
+        <!-- 1. 頂部橫式資訊條 -->
+        <div class="top-strip">
+          <div class="strip-left">
+            <span class="pulse-dot"></span>
+            <span class="badge-day">📅 每日衛教 #${item.id} / 50 ${isToday ? '（今日焦點）' : ''}</span>
+            <span class="badge-cat">📌 ${item.cat}</span>
+            <span class="badge-source">🔬 ${item.source}</span>
+          </div>
+
+          <div class="strip-right">
+            <button class="mini-btn" onclick="switchTopic(-1)" title="上一題">◀</button>
+            <select class="topic-select" onchange="jumpTopic(this.value)" aria-label="選擇50則失智衛教主題">
+              ${optionsHtml}
+            </select>
+            <button class="mini-btn" onclick="switchTopic(1)" title="下一題">▶</button>
+            <button class="mini-btn" onclick="randomTopic()" title="隨機抽一題">🎲 隨機抽</button>
+          </div>
+        </div>
+
+        <!-- 2. 橫式主體：左欄「問題＋思考提示語」，右欄「遮蔽式每日衛教一句話」 -->
+        <div class="banner-main-row">
+          <!-- 左欄：題目與給初學者／工作者的提示語 -->
+          <div class="question-col">
+            <div class="question-text">
+              💡 ${item.q}
+            </div>
+            <div class="hint-line">
+              ${item.hint}（先在心裡想一下答案，再點右邊揭曉！）
+            </div>
+          </div>
+
+          <!-- 右欄：點一下撥開的「每日衛教一句話」遮蔽答案 -->
+          <div class="answer-col">
+            <div class="spoiler-one-liner ${state.isMasked ? 'masked' : 'revealed'}"
+                 onclick="toggleSpoiler()"
+                 title="點一下切換顯示或遮蔽答案">
+              <div class="one-liner-text">${item.a}</div>
+              <div class="mask-prompt-overlay">
+                <span>🔒</span>
+                <span>想好了嗎？點一下揭曉「每日衛教一句話」答案</span>
+              </div>
+            </div>
+
+            <div class="feedback-mini-row">
+              <span>${state.isMasked ? '👆 點擊上方灰色遮罩看科學解答' : '🙌 你的答案跟科學實證一樣嗎？'}</span>
+              <div>
+                <button class="check-pill-btn ${state.userSelfCheck === 'bingo' ? 'active' : ''}"
+                        onclick="markCheck('bingo')">
+                  🎉 我有答對！
+                </button>
+                <button class="check-pill-btn ${state.userSelfCheck === 'learned' ? 'active' : ''}"
+                        onclick="markCheck('learned')">
+                  💡 學到一招（跳下一題 ▶）
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function toggleSpoiler() {
+      state.isMasked = !state.isMasked;
+      renderBanner();
+    }
+
+    function markCheck(type) {
+      state.userSelfCheck = type;
+      state.isMasked = false;
+      renderBanner();
+      if (type === 'learned') {
+        setTimeout(() => switchTopic(1), 450);
+      }
+    }
+
+    function switchTopic(offset) {
+      const len = EVIDENCE_TOPICS_50.length;
+      state.currentIdx = (state.currentIdx + offset + len) % len;
+      state.isMasked = true;
+      state.userSelfCheck = null;
+      renderBanner();
+    }
+
+    function jumpTopic(val) {
+      state.currentIdx = parseInt(val, 10);
+      state.isMasked = true;
+      state.userSelfCheck = null;
+      renderBanner();
+    }
+
+    function randomTopic() {
+      let next = Math.floor(Math.random() * EVIDENCE_TOPICS_50.length);
+      if (next === state.currentIdx) next = (next + 1) % EVIDENCE_TOPICS_50.length;
+      state.currentIdx = next;
+      state.isMasked = true;
+      state.userSelfCheck = null;
+      renderBanner();
+    }
+
+    // 初始化
+    renderBanner();
+  </script>
+</body>
+</html>
