@@ -295,10 +295,59 @@
         padding-bottom: 12px;
       }
     }
+
+    /* 柔和灑花畫布（不擋點擊、尊重減少動態偏好） */
+    #confettiCanvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* 暖心稱讚與學習回饋條 */
+    .praise-toast {
+      margin-top: 8px;
+      padding: 8px 12px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #FFF7E0 0%, #EDF7F0 100%);
+      border: 1.5px solid #E8D5AE;
+      color: #5A4531;
+      font-size: 0.85rem;
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      animation: praisePop 0.28s ease;
+    }
+
+    .praise-count {
+      font-size: 0.78rem;
+      background: #FFFFFF;
+      border: 1px solid #E3CEAA;
+      color: #8A5A19;
+      padding: 2px 8px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    @keyframes praisePop {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .praise-toast { animation: none; }
+      #confettiCanvas { display: none; }
+    }
   </style>
 </head>
 <body>
 
+  <canvas id="confettiCanvas" aria-hidden="true"></canvas>
   <!-- 橫式 Notion 嵌入式「每日失智衛教一句話」橫幅 -->
   <div class="horizontal-banner" id="bannerApp"></div>
 
@@ -808,9 +857,100 @@
                 </button>
               </div>
             </div>
+            ${state.praiseMessage ? `
+              <div class="praise-toast" role="status" aria-live="polite">
+                <span>${state.praiseMessage}</span>
+                <span class="praise-count">✨ 今日已完成 ${getTodayDoneCount()} 題練習</span>
+              </div>
+            ` : ''}
           </div>
         </div>
       `;
+    }
+
+    const PRAISE_PHRASES = [
+      '🌟 太棒了！你已完成今天的一次暖心照護小練習～',
+      '💛 答對了！先理解再回應，長者一定感受得到這份用心！',
+      '✨ 很讚喔！每天累積一點點，陪伴長者更有底氣！',
+      '🌸 拍拍手！把實證知識變成日常直覺，超棒的！',
+      '🍀 厲害喔！溫柔又有方法的照顧，從這裡開始！'
+    ];
+
+    function getTodayKey() {
+      const d = new Date();
+      return `dementia_edu_done_${d.getFullYear()}_${d.getMonth() + 1}_${d.getDate()}`;
+    }
+
+    function getTodayDoneCount() {
+      try {
+        return parseInt(localStorage.getItem(getTodayKey()) || '0', 10);
+      } catch (e) {
+        return 0;
+      }
+    }
+
+    function incrementTodayDoneCount() {
+      try {
+        const next = getTodayDoneCount() + 1;
+        localStorage.setItem(getTodayKey(), String(next));
+        return next;
+      } catch (e) {
+        return 1;
+      }
+    }
+
+    function launchSoftConfetti() {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        return;
+      }
+      const canvas = document.getElementById('confettiCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const colors = ['#F2C14E', '#7BB28E', '#E899A8', '#8AB6D6', '#F4A261', '#FFF3B0'];
+      const pieces = Array.from({ length: 42 }, () => ({
+        x: Math.random() * canvas.width,
+        y: -12 - Math.random() * 60,
+        w: 6 + Math.random() * 5,
+        h: 8 + Math.random() * 6,
+        vx: (Math.random() - 0.5) * 2.4,
+        vy: 2.2 + Math.random() * 2.6,
+        rot: Math.random() * Math.PI * 2,
+        vRot: (Math.random() - 0.5) * 0.16,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        alpha: 0.92
+      }));
+
+      const start = performance.now();
+      const duration = 1500;
+
+      function frame(now) {
+        const elapsed = now - start;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        const fade = elapsed > 1000 ? Math.max(0, 1 - (elapsed - 1000) / 500) : 1;
+        pieces.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.rot += p.vRot;
+          ctx.save();
+          ctx.globalAlpha = p.alpha * fade;
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+          ctx.fillStyle = p.color;
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          ctx.restore();
+        });
+
+        if (elapsed < duration) {
+          requestAnimationFrame(frame);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+      }
+      requestAnimationFrame(frame);
     }
 
     function toggleSpoiler() {
@@ -821,9 +961,15 @@
     function markCheck(type) {
       state.userSelfCheck = type;
       state.isMasked = false;
-      renderBanner();
-      if (type === 'learned') {
-        setTimeout(() => switchTopic(1), 450);
+      incrementTodayDoneCount();
+      if (type === 'bingo') {
+        state.praiseMessage = PRAISE_PHRASES[Math.floor(Math.random() * PRAISE_PHRASES.length)];
+        renderBanner();
+        launchSoftConfetti();
+      } else {
+        state.praiseMessage = '🌱 沒關係，多記住一個小觀念就是進步！即將前往下一題…';
+        renderBanner();
+        setTimeout(() => switchTopic(1), 900);
       }
     }
 
@@ -832,6 +978,7 @@
       state.currentIdx = (state.currentIdx + offset + len) % len;
       state.isMasked = true;
       state.userSelfCheck = null;
+      state.praiseMessage = '';
       renderBanner();
     }
 
@@ -839,6 +986,7 @@
       state.currentIdx = parseInt(val, 10);
       state.isMasked = true;
       state.userSelfCheck = null;
+      state.praiseMessage = '';
       renderBanner();
     }
 
@@ -848,6 +996,7 @@
       state.currentIdx = next;
       state.isMasked = true;
       state.userSelfCheck = null;
+      state.praiseMessage = '';
       renderBanner();
     }
 
